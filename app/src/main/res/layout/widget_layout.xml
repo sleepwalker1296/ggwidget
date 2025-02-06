@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="12dp"
+    android:background="@drawable/widget_background"
+    tools:context=".MyWidgetProvider">
+
+    <!-- Название токена -->
+    <TextView
+        android:id="@+id/widget_token_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="$GOVNO Price"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="@android:color/black"
+        android:gravity="center"
+        android:layout_marginBottom="4dp"/>
+
+    <!-- Контейнер для цены и процента изменения -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <!-- Цена токена -->
+        <TextView
+            android:id="@+id/widget_token_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$0.00"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-black"
+            android:textColor="@android:color/holo_blue_dark"
+            android:gravity="center"
+            android:layout_marginEnd="8dp"/>
+
+        <!-- Изменение цены (%) -->
+        <TextView
+            android:id="@+id/widget_token_change"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+0.00%"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="@android:color/holo_green_dark"
+            android:gravity="center"/>
+    </LinearLayout>
+</LinearLayout>

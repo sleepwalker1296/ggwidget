@@ -1,0 +1,88 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp"
+    android:background="@drawable/background_gradient"
+    tools:context=".MainActivity">
+
+    <!-- Заголовок -->
+    <TextView
+        android:id="@+id/token_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="$GOVNO Price"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="@color/primary_text"
+        android:gravity="center"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- Карточка с курсом криптовалюты -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
+        android:layout_marginBottom="16dp"
+        android:padding="16dp"
+        android:background="@drawable/card_background">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/token_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$0.00"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-black"
+                android:textColor="@color/accent_text"
+                android:gravity="center"
+                android:layout_marginBottom="4dp"/>
+
+            <TextView
+                android:id="@+id/exchange_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="USD/RUB: 0.00, USD/EUR: 0.00"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/secondary_text"
+                android:gravity="center"
+                android:layout_marginBottom="8dp"/>
+
+
+            <TextView
+                android:id="@+id/token_change"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+0.00%"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/green"
+                android:gravity="center"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Кнопка обновления -->
+    <Button
+        android:id="@+id/btn_refresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Обновить курс"
+        android:textAllCaps="false"
+        android:padding="12dp"
+        android:backgroundTint="@color/button_color"
+        android:textColor="@color/primary_text"/>
+</LinearLayout>

@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Виджет $GOVNO</string>
+    <string name="refresh">Обновить</string>
+    <string name="crypto_icon">Иконка криптовалюты</string>
+</resources>
