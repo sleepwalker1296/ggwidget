@@ -23,7 +23,7 @@ class WidgetUpdateWorker(context: Context, workerParams: WorkerParameters) : Wor
             runBlocking {
                 val response = GeckoApi.service.getCryptoPrice()
                 val newPrice = response.data?.attributes?.base_token_price_usd?.toFloatOrNull() ?: 0.00f
-                val priceChange = response.data?.attributes?.price_change_percentage_h1?.toFloatOrNull() ?: 0.00f
+                val priceChange = response.data?.attributes?.price_change_percentage_h24?.toFloatOrNull() ?: 0.00f
 
                 updateWidget(context, newPrice, priceChange)
             }

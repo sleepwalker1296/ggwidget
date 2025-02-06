@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center"
     android:padding="12dp"
-    android:background="@drawable/widget_background"
-    tools:context=".MyWidgetProvider">
+    android:background="@drawable/widget_background">
 
     <!-- Название токена -->
     <TextView
@@ -18,11 +15,11 @@
         android:textSize="16sp"
         android:textStyle="bold"
         android:fontFamily="sans-serif-medium"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/white"
         android:gravity="center"
         android:layout_marginBottom="4dp"/>
 
-    <!-- Контейнер для цены и процента изменения -->
+    <!-- Контейнер для цены и процентов -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,7 +35,7 @@
             android:textSize="22sp"
             android:textStyle="bold"
             android:fontFamily="sans-serif-black"
-            android:textColor="@android:color/holo_blue_dark"
+            android:textColor="@android:color/holo_blue_light"
             android:gravity="center"
             android:layout_marginEnd="8dp"/>
 
@@ -51,7 +48,16 @@
             android:textSize="14sp"
             android:textStyle="bold"
             android:fontFamily="sans-serif-medium"
-            android:textColor="@android:color/holo_green_dark"
+            android:textColor="@android:color/holo_green_light"
             android:gravity="center"/>
     </LinearLayout>
+
+    <!-- Кнопка обновления -->
+    <ImageView
+        android:id="@+id/widget_refresh_button"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_refresh"
+        android:tint="@android:color/white"
+        android:layout_marginTop="8dp"/>
 </LinearLayout>

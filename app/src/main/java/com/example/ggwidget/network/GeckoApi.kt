@@ -15,7 +15,7 @@ data class GeckoData(
 
 data class GeckoAttributes(
     val base_token_price_usd: String? = "0.00", // Дефолтное значение, если null
-    val price_change_percentage_h1: String? = "0.00" // Дефолтное значение, если null
+    val price_change_percentage_h24: String? = "0.00" // Дефолтное значение, если null
 )
 
 // Интерфейс API

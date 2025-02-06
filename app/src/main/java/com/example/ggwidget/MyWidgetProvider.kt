@@ -4,16 +4,12 @@ import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
-import com.example.ggwidget.worker.WidgetUpdateScheduler
 import android.content.Intent
 import android.util.Log
 import android.widget.RemoteViews
-import androidx.lifecycle.lifecycleScope
+import com.example.ggwidget.worker.WidgetUpdateScheduler
 import com.example.ggwidget.network.GeckoApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class MyWidgetProvider : AppWidgetProvider() {
 
@@ -26,18 +22,22 @@ class MyWidgetProvider : AppWidgetProvider() {
 
         // Запускаем обновление виджета через WorkManager
         WidgetUpdateScheduler.scheduleWidgetUpdate(context)
+
+        // Обновляем каждый виджет вручную при вызове onUpdate
+        for (widgetId in appWidgetIds) {
+            updateWidget(context, appWidgetManager, widgetId)
+        }
     }
-}
 
     private fun updateWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
         val views = RemoteViews(context.packageName, R.layout.widget_layout)
 
         // Запускаем обновление курса через API
-        GlobalScope.launch(Dispatchers.IO) {
+        CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = GeckoApi.service.getCryptoPrice()
                 val newPrice = response.data?.attributes?.base_token_price_usd?.toFloatOrNull() ?: 0.00f
-                val priceChange = response.data?.attributes?.price_change_percentage_h1?.toFloatOrNull() ?: 0.00f
+                val priceChange = response.data?.attributes?.price_change_percentage_h24?.toFloatOrNull() ?: 0.00f
 
                 Log.d("CryptoWidget", "Цена токена: $newPrice, Изменение: $priceChange%")
 
@@ -58,9 +58,11 @@ class MyWidgetProvider : AppWidgetProvider() {
 
         // Настраиваем обновление при нажатии на виджет
         val intent = Intent(context, MyWidgetProvider::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
-        views.setOnClickPendingIntent(R.id.widget_token_price, pendingIntent)
+        val pendingIntent = PendingIntent.getBroadcast(
+            context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        views.setOnClickPendingIntent(R.id.widget_refresh_button, pendingIntent)
 
         appWidgetManager.updateAppWidget(appWidgetId, views)
-    }
-
+    } // ✅ Закрыли `updateWidget()`
+} // ✅ Закрыли `MyWidgetProvider`
