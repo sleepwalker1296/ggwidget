@@ -1,23 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <!-- Градиентный фон -->
-    <item>
-        <shape android:shape="rectangle">
-            <gradient
-                android:angle="45"
-                android:startColor="#6A0DAD"
-                android:endColor="#1E3A8A"
-                android:type="linear"/>
-        </shape>
-    </item>
-
-    <!-- Затемняющий слой для глубины -->
-    <item>
-        <shape android:shape="rectangle">
-            <solid android:color="#121212"/>
-            <corners android:radius="0dp"/>
-        </shape>
-    </item>
-
-</layer-list>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient
+        android:angle="270"
+        android:startColor="#1E1E1E"
+        android:endColor="#121212"/>
+</shape>

@@ -12,15 +12,23 @@
     <color name="primary">#6200EE</color> <!-- Фиолетовая кнопка -->
     <color name="cardBackground">#1F1F1F</color> <!-- Белая карточка -->
     <color name="gradient_start">#6A0DAD</color> <!-- Фиолетовый -->
+    <color name="primaryVariant">#3700B3</color>
+    <color name="secondary">#03DAC5</color>
     <color name="gradient_end">#1E3A8A</color> <!-- Синий -->
     <!-- Текстовые цвета -->
     <color name="primary_text">#FFFFFF</color> <!-- Белый текст -->
-    <color name="secondary_text">#B0B0B0</color> <!-- Светло-серый текст -->
+    <color name="secondary_text">#AAAAAA</color> <!-- Светло-серый текст -->
+    <color name="primaryText">#000000</color> <!-- Белый текст -->
+    <color name="secondaryText">#B3FFFFFF</color> <!-- Серый текст -->
     <color name="accent_text">#00C6FF</color> <!-- Бирюзовый текст -->
     <!-- Кнопка -->
-    <color name="button_color">#6200EE</color> <!-- Фиолетовая кнопка -->
+    <color name="button_color">#3498db</color> <!-- Фиолетовая кнопка -->
     <color name="button_pressed">#4500AA</color> <!-- Затемнение кнопки при нажатии -->
     <!-- Проценты -->
     <color name="red">#FF1744</color> <!-- Красный для падения -->
     <color name="green">#00E676</color>
+    <color name="backgroundLight">#F5F5F5</color>
+    <color name="backgroundDark">#121212</color>
+    <color name="cardBackgroundLight">#FFFFFF</color> <!-- Светлая тема -->
+    <color name="cardBackgroundDark">#1E1E1E</color> <!-- Тёмная тема -->
 </resources>

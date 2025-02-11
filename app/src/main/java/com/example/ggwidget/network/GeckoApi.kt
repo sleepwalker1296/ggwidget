@@ -14,13 +14,15 @@ data class GeckoData(
 )
 
 data class GeckoAttributes(
-    val base_token_price_usd: String? = "0.00", // Дефолтное значение, если null
-    val price_change_percentage_h24: String? = "0.00" // Дефолтное значение, если null
+    val base_token_price_usd: Float? = 0.00f, // Дефолтное значение, если null
+    val price_change_percentage_24h: Float? = 0.00f, // Дефолтное значение, если null
+    val price_change_percentage_h1: Float? = 0.00f, // Добавлено
+    val price_change_percentage_h6: Float? = 0.00f, // Добавлено
 )
 
 // Интерфейс API
 interface GeckoApiService {
-    @GET("api/v2/networks/ton/pools/EQAf2LUJZMdxSAGhlp-A60AN9bqZeVM994vCOXH05JFo-7dc")
+    @GET("api/v2/networks/ton/pools/EQAoJ9eh8MoKzErNE86N1uHzp4Eskth5Od5tDEYgS5mVU_Fj")
     suspend fun getCryptoPrice(): GeckoResponse
 }
 

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Тень для блока -->
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="20dp"/>
+            <solid android:color="@android:color/black"/>
+            <padding android:left="4dp" android:top="4dp" android:right="4dp" android:bottom="4dp"/>
+            <alpha android:value="0.2"/> <!-- Прозрачная тень -->
+        </shape>
+    </item>
+
+    <!-- Основной блок -->
+    <item android:top="6dp" android:left="6dp">
+        <shape android:shape="rectangle">
+            <corners android:radius="20dp"/>
+            <solid android:color="?attr/cardBackground"/>
+            <padding android:left="16dp" android:right="16dp"/>
+            <alpha android:value="0.9"/> <!-- Делаем блок полупрозрачным -->
+        </shape>
+    </item>
+
+</layer-list>

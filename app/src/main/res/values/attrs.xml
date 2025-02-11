@@ -1,0 +1,6 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <attr name="cardBackground" format="color"/>
+    <!-- Светлая тема -->
+
+    <!-- Тёмная тема --></resources>

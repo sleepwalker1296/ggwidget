@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -5,6 +6,15 @@
     android:gravity="center"
     android:padding="12dp"
     android:background="@drawable/widget_background">
+
+    <ImageView
+        android:id="@+id/widget_refresh_button"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_refresh"
+        android:tint="@android:color/white"
+        android:layout_marginTop="8dp"/>
+
 
     <!-- Название токена -->
     <TextView
@@ -14,7 +24,6 @@
         android:text="$GOVNO Price"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:fontFamily="sans-serif-medium"
         android:textColor="@android:color/white"
         android:gravity="center"
         android:layout_marginBottom="4dp"/>
@@ -32,11 +41,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="$0.00"
-            android:textSize="22sp"
+            android:textSize="25sp"
             android:textStyle="bold"
-            android:fontFamily="sans-serif-black"
-            android:textColor="@android:color/holo_blue_light"
-            android:gravity="center"
+            android:textColor="@color/white"
             android:layout_marginEnd="8dp"/>
 
         <!-- Изменение цены (%) -->
@@ -47,17 +54,8 @@
             android:text="+0.00%"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:fontFamily="sans-serif-medium"
             android:textColor="@android:color/holo_green_light"
             android:gravity="center"/>
-    </LinearLayout>
+    </LinearLayout> <!-- ✅ Закрыли `LinearLayout` для цены и процентов -->
 
-    <!-- Кнопка обновления -->
-    <ImageView
-        android:id="@+id/widget_refresh_button"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/ic_refresh"
-        android:tint="@android:color/white"
-        android:layout_marginTop="8dp"/>
 </LinearLayout>

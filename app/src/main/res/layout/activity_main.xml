@@ -1,89 +1,290 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundDark"
     android:orientation="vertical"
-    android:gravity="center"
-    android:padding="16dp"
-    android:background="@drawable/background_gradient"
-    tools:context=".MainActivity">
+    android:gravity="top"
+    android:padding="16dp">
 
-    <!-- Заголовок -->
-    <TextView
-        android:id="@+id/token_title"
-        android:layout_width="wrap_content"
+    <!-- 🔹 Верхняя панель: Заголовок + Кнопка настроек -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="$GOVNO Price"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:fontFamily="sans-serif-medium"
-        android:textColor="@color/primary_text"
+        android:orientation="horizontal"
         android:gravity="center"
-        android:layout_marginBottom="8dp"/>
+        android:paddingBottom="12dp">
 
-    <!-- Карточка с курсом криптовалюты -->
+        <!-- Заголовок -->
+        <TextView
+            android:id="@+id/widget_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Виджет $GOVNO"
+            android:textColor="@color/secondaryText"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_weight="1"/>
+
+        <!-- Кнопка "Настройки" -->
+        <ImageButton
+            android:id="@+id/settings_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_settings"
+            android:contentDescription="Настройки"/>
+    </LinearLayout>
+
+    <!-- 🔹 Блок с изменением цены за 1ч, 6ч, 24ч -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="8dp"
-        android:layout_marginBottom="16dp"
-        android:padding="16dp"
-        android:background="@drawable/card_background">
+        android:layout_marginBottom="12dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="6dp"
+        android:backgroundTint="@color/cardBackground">
 
-        <!-- Вложенный LinearLayout -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="12dp">
+
+            <!-- 1H -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:paddingEnd="16dp">
+
+                <TextView
+                    android:text="1H"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/secondaryText"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/token_change_1h"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+0.00%"
+                    android:textColor="@color/green"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:gravity="center"/>
+            </LinearLayout>
+
+            <!-- 6H -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:paddingEnd="16dp">
+
+                <TextView
+                    android:text="6H"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/secondaryText"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/token_change_6h"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+0.00%"
+                    android:textColor="@color/green"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:gravity="center"/>
+            </LinearLayout>
+
+            <!-- 24H -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:text="24H"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/secondaryText"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/token_change_24h"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+0.00%"
+                    android:textColor="@color/green"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:gravity="center"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- 🔹 Блок с ценой криптовалюты -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        app:cardCornerRadius="26dp"
+        app:cardElevation="6dp"
+        android:backgroundTint="@color/cardBackground">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="vertical"
-            android:gravity="center">
+            android:padding="16dp">
 
             <TextView
                 android:id="@+id/token_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="$0.00"
+                android:textColor="@color/secondaryText"
                 android:textSize="32sp"
                 android:textStyle="bold"
-                android:fontFamily="sans-serif-black"
-                android:textColor="@color/accent_text"
-                android:gravity="center"
-                android:layout_marginBottom="4dp"/>
-
-            <TextView
-                android:id="@+id/exchange_rate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="USD/RUB: 0.00, USD/EUR: 0.00"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@color/secondary_text"
-                android:gravity="center"
-                android:layout_marginBottom="8dp"/>
+                android:gravity="center"/>
 
             <TextView
                 android:id="@+id/token_change"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="+0.00%"
+                android:textColor="@color/green"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:fontFamily="sans-serif-medium"
-                android:textColor="@color/green"
                 android:gravity="center"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <!-- Кнопка обновления -->
-    <Button
-        android:id="@+id/btn_refresh"
-        android:layout_width="wrap_content"
+    <!-- 🔹 Блок с курсом валют -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Обновить курс"
-        android:textAllCaps="false"
-        android:padding="12dp"
-        android:backgroundTint="@color/button_color"
-        android:textColor="@color/primary_text"/>
+        android:layout_marginBottom="12dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="6dp"
+        android:backgroundTint="@color/cardBackground">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/exchange_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="USD/RUB: 0.00, USD/EUR: 0.00"
+                android:textColor="@color/secondaryText"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- 🔹 Блоки Pool Info & Market Cap (Горизонтально) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="12dp"
+        android:padding="8dp">
+
+        <!-- 🔹 Блок Pool Info -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="6dp"
+            android:backgroundTint="@color/cardBackground">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="30dp">
+
+                <TextView
+                    android:text="Pool Info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/secondaryText"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/pool_info"
+                    android:text="Loading..."
+                    android:textColor="@color/secondaryText"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- 🔹 Блок Market Cap -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="6dp"
+            android:backgroundTint="@color/cardBackground">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="30dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Market Cap"
+                    android:textColor="@color/secondaryText"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/market_cap"
+                    android:text="Loading..."
+                    android:textColor="@color/secondaryText"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
 </LinearLayout>
