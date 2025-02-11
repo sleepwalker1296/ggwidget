@@ -64,8 +64,8 @@ class MyWidgetProvider : AppWidgetProvider() {
                 val response = GeckoApi.service.getCryptoPrice()
                 val attributes = response.data?.attributes
 
-                val newPrice = attributes?.base_token_price_usd ?: lastPrice
-                val priceChange = attributes?.price_change_percentage_24h ?: lastPriceChange
+                val newPrice = attributes?.priceUsd ?: 0.00f
+                val priceChange = attributes?.priceChange?.h24 ?: lastPriceChange
 
                 // Сохраняем данные
                 lastPrice = newPrice

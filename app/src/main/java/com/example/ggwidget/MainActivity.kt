@@ -95,10 +95,10 @@ class MainActivity : AppCompatActivity() {
                 val response = GeckoApi.service.getCryptoPrice()
                 val attributes = response.data?.attributes
 
-                val newPrice = attributes?.base_token_price_usd ?: 0.00f
-                val priceChange1H = attributes?.price_change_percentage_h1 ?: lastPriceChange ?: 0.00f
-                val priceChange6H = attributes?.price_change_percentage_h6 ?: lastPriceChange ?: 0.00f
-                val priceChange24H = attributes?.price_change_percentage_24h ?: lastPriceChange ?: 0.00f
+                val newPrice = attributes?.priceUsd ?: 0.00f
+                val priceChange1H = attributes?.priceChange?.h1 ?: lastPriceChange ?: 0.00f
+                val priceChange6H = attributes?.priceChange?.h6 ?: lastPriceChange ?: 0.00f
+                val priceChange24H = attributes?.priceChange?.h24 ?: lastPriceChange ?: 0.00f
 
                 lastPriceChange = priceChange24H  // Сохраняем последнее значение
 
