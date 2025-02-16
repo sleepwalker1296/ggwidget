@@ -4,13 +4,13 @@
     <!-- Тень -->
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="#55000000"/> <!-- Полупрозрачная чёрная тень -->
+            <solid android:color="#23000000"/> <!-- Полупрозрачная чёрная тень -->
             <corners android:radius="16dp"/>
         </shape>
     </item>
 
     <!-- Основной фон -->
-    <item android:left="4dp" android:top="4dp"> <!-- Смещаем фон, создавая эффект тени -->
+    <item android:left="4dp" android:top="3dp"> <!-- Смещаем фон, создавая эффект тени -->
         <shape android:shape="rectangle">
             <solid android:color="@color/lightBackground"/> <!-- ✅ Светлый фон -->
             <corners android:radius="16dp"/>

@@ -6,20 +6,20 @@
     android:orientation="vertical"
     android:padding="12dp"
     android:elevation="8dp"
-    android:background="@drawable/widget_background">
+    android:background="@drawable/widget_background"
+    android:gravity="center_vertical">
 
-    <!-- Верхняя строка: Название токена (слева) + 24H (справа) -->
+    <!-- Верхняя строка: Название токена + 24H -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
-        <!-- Название токена (Слева) -->
+        <!-- Название токена -->
         <TextView
             android:id="@+id/widget_token_title"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="$GOVNO Price"
             android:textSize="16sp"
@@ -27,7 +27,7 @@
             android:textColor="@android:color/white"
             android:gravity="start"/>
 
-        <!-- 24H (Справа) -->
+        <!-- 24H -->
         <TextView
             android:id="@+id/widget_24h_label"
             android:layout_width="wrap_content"
@@ -36,10 +36,11 @@
             android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="@android:color/white"
-            android:gravity="end"/>
+            android:gravity="end"
+            android:layout_weight="1"/>
     </LinearLayout>
 
-    <!-- Нижняя строка: Цена (слева) + Изменение цены (справа) -->
+    <!-- Нижняя строка: Цена + Изменение % в подсвечиваемом овале -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,7 +48,7 @@
         android:gravity="center_vertical"
         android:paddingTop="4dp">
 
-        <!-- Цена токена (Слева) -->
+        <!-- Цена токена -->
         <TextView
             android:id="@+id/widget_token_price"
             android:layout_width="0dp"
@@ -57,19 +58,20 @@
             android:textSize="25sp"
             android:textStyle="bold"
             android:textColor="@android:color/white"
-            android:gravity="start"
-            android:layout_marginEnd="12dp"/>
+            android:gravity="start"/>
 
-        <!-- Изменение цены (%) (Справа) -->
+        <!-- Изменение % (в овале с динамическим цветом) -->
         <TextView
             android:id="@+id/widget_token_change"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="6dp"
             android:text="+0.00%"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:textColor="@android:color/holo_green_light"
-            android:gravity="end"/>
+            android:textColor="@android:color/white"
+            android:gravity="center"
+            android:background="@drawable/oval_dynamic_background"/>
     </LinearLayout>
 
 </LinearLayout>

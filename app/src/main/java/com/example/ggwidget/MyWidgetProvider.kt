@@ -68,7 +68,7 @@ class MyWidgetProvider : AppWidgetProvider() {
         views.setTextColor(R.id.widget_token_price, textColor)
         views.setTextColor(R.id.widget_token_change, textColor)
 
-        // ✅ Используем `widgetScope.launch` вместо `CoroutineScope.launch`
+        // ✅ Обновляем цену
         widgetScope.launch {
             try {
                 val response = GeckoApi.service.getCryptoPrice()
@@ -84,6 +84,10 @@ class MyWidgetProvider : AppWidgetProvider() {
 
                     val priceColor = if (priceChange >= 0) Color.GREEN else Color.RED
                     views.setTextColor(R.id.widget_token_change, priceColor)
+
+                    // ✅ Меняем фон овала в зависимости от роста или падения цены
+                    val backgroundResource = if (priceChange >= 0) R.drawable.oval_green_background else R.drawable.oval_red_background
+                    views.setInt(R.id.widget_token_change, "setBackgroundResource", backgroundResource)
 
                     appWidgetManager.updateAppWidget(appWidgetId, views)
                 }

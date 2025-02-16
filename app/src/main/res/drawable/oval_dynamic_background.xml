@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Если процент положительный (зелёный) -->
+    <item android:drawable="@color/green"
+        android:state_selected="true"/>
+
+    <!-- Если процент отрицательный (красный) -->
+    <item android:drawable="@color/red"
+        android:state_pressed="true"/>
+
+</selector>
