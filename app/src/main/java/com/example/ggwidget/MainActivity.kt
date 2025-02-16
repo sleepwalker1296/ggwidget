@@ -4,22 +4,22 @@ import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageButton
+import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
 import com.example.ggwidget.network.ExchangeRateApi
 import com.example.ggwidget.network.GeckoApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var tokenPriceText: TextView
@@ -28,6 +28,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tokenChange24H: TextView
     private lateinit var exchangeRateText: TextView
     private lateinit var settingsButton: ImageButton
+    private lateinit var sharedPreferences: SharedPreferences
+    private var updateJob: Job? = null // Переменная для управления корутинами
 
     private var lastPriceChange: Float? = null // Хранит предыдущее значение %
     private val updateInterval = 30_000L // Интервал обновления (30 секунд)
@@ -35,15 +37,16 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        sharedPreferences = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+
+        // ✅ Устанавливаем сохранённую тему перед загрузкой UI
+        applySavedTheme()
+
+        setContentView(R.layout.activity_main) // Устанавливаем контент после применения темы
 
         window.statusBarColor = resources.getColor(R.color.backgroundDark, theme)
         window.navigationBarColor = resources.getColor(R.color.backgroundDark, theme)
-
-        // Отключаем фиолетовый оверлей на статус-баре
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-        }
 
         // ✅ Проверяем и запрашиваем разрешение на точные будильники (AlarmManager)
         requestExactAlarmPermission()
@@ -56,24 +59,82 @@ class MainActivity : AppCompatActivity() {
         exchangeRateText = findViewById(R.id.exchange_rate)
         settingsButton = findViewById(R.id.settings_button)
 
-        // Обработчик нажатия на кнопку настроек
-        settingsButton.setOnClickListener {
-            Log.d("Settings", "Кнопка настроек нажата!")
-        }
+        // Обработчик нажатия на кнопку настроек (выпадающее меню)
+        settingsButton.setOnClickListener { showPopupMenu(it) }
 
         // Запуск автообновления
         startAutoUpdate()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        updateJob?.cancel() // ✅ Отмена корутин при уничтожении активности
+    }
+
     // ✅ Метод для автообновления данных каждые 30 секунд
     private fun startAutoUpdate() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            while (true) {
+        updateJob?.cancel() // Отменяем старую корутину, если она была запущена
+        updateJob = lifecycleScope.launch(Dispatchers.IO) {
+            while (isActive) { // Проверяем, активна ли корутина
                 fetchCryptoPrice()
                 fetchExchangeRate()
                 delay(updateInterval)
             }
         }
+    }
+
+    // ✅ Функция показа выпадающего меню
+    private fun showPopupMenu(view: View) {
+        val popupMenu = PopupMenu(this, view)
+        popupMenu.menuInflater.inflate(R.menu.settings_menu, popupMenu.menu)
+
+        // Отмечаем текущую тему
+        when (getSavedTheme()) {
+            AppCompatDelegate.MODE_NIGHT_YES -> popupMenu.menu.findItem(R.id.menu_dark).isChecked = true
+            AppCompatDelegate.MODE_NIGHT_NO -> popupMenu.menu.findItem(R.id.menu_light).isChecked = true
+        }
+
+        popupMenu.setOnMenuItemClickListener { item: MenuItem ->
+            when (item.itemId) {
+                R.id.menu_dark -> {
+                    saveTheme(AppCompatDelegate.MODE_NIGHT_YES)
+                    true
+                }
+                R.id.menu_light -> {
+                    saveTheme(AppCompatDelegate.MODE_NIGHT_NO)
+                    true
+                }
+                else -> false
+            }
+        }
+
+        popupMenu.show()
+    }
+
+    // ✅ Сохранение выбранной темы
+    private fun saveTheme(themeMode: Int) {
+        sharedPreferences.edit().putInt("theme_mode", themeMode).apply()
+        AppCompatDelegate.setDefaultNightMode(themeMode)
+        recreate() // Перезапуск активности для применения темы
+
+        // ✅ Отправляем сигнал обновления виджета
+        val intent = Intent(this, MyWidgetProvider::class.java).apply {
+            action = "com.example.ggwidget.UPDATE_WIDGET_THEME"
+        }
+        sendBroadcast(intent)
+
+        recreate() // Перезапуск активности для применения темы
+
+    }
+
+    // ✅ Получение сохранённой темы
+    private fun getSavedTheme(): Int {
+        return sharedPreferences.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_YES) // ✅ По умолчанию тёмная тема
+    }
+
+    // ✅ Применение сохранённой темы при старте
+    private fun applySavedTheme() {
+        AppCompatDelegate.setDefaultNightMode(getSavedTheme())
     }
 
     // ✅ Запрос разрешения на точные будильники (AlarmManager)
@@ -100,12 +161,13 @@ class MainActivity : AppCompatActivity() {
                 val priceChange6H = attributes?.priceChange?.h6 ?: lastPriceChange ?: 0.00f
                 val priceChange24H = attributes?.priceChange?.h24 ?: lastPriceChange ?: 0.00f
 
-                lastPriceChange = priceChange24H  // Сохраняем последнее значение
-
-                Log.d("CryptoUpdate", "Цена: $newPrice, 1H: $priceChange1H%, 6H: $priceChange6H%, 24H: $priceChange24H%")
+                lastPriceChange = priceChange24H
 
                 withContext(Dispatchers.Main) {
-                    updatePriceDisplay(newPrice, priceChange1H, priceChange6H, priceChange24H)
+                    tokenPriceText.text = "$%.2f".format(newPrice)
+                    tokenChange1H.text = "%.2f%%".format(priceChange1H)
+                    tokenChange6H.text = "%.2f%%".format(priceChange6H)
+                    tokenChange24H.text = "%.2f%%".format(priceChange24H)
                 }
             } catch (e: Exception) {
                 Log.e("Crypto", "Ошибка загрузки данных", e)
@@ -114,60 +176,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     // ✅ Обновление курса валют
-    private suspend fun fetchExchangeRate() {
-        try {
-            val response = ExchangeRateApi.service.getExchangeRates()
-            val rubRate = response.rates["RUB"] ?: 0.00f
-            val eurRate = response.rates["EUR"] ?: 0.00f
+    private fun fetchExchangeRate() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val response = ExchangeRateApi.service.getExchangeRates()
+                val rubRate = response.rates["RUB"] ?: 0.00f
+                val eurRate = response.rates["EUR"] ?: 0.00f
 
-            Log.d("ExchangeRate", "Курс USD/RUB: $rubRate, USD/EUR: $eurRate")
-
-            withContext(Dispatchers.Main) {
-                exchangeRateText.text = "USD/RUB: %.2f, USD/EUR: %.2f".format(rubRate, eurRate)
+                withContext(Dispatchers.Main) {
+                    exchangeRateText.text = "USD/RUB: %.2f, USD/EUR: %.2f".format(rubRate, eurRate)
+                }
+            } catch (e: Exception) {
+                Log.e("ExchangeRate", "Ошибка загрузки данных", e)
             }
-        } catch (e: Exception) {
-            Log.e("ExchangeRate", "Ошибка загрузки данных", e)
         }
-    }
-
-    // ✅ Обновление UI
-    private fun updatePriceDisplay(price: Float, change1H: Float, change6H: Float, change24H: Float) {
-        val formattedPrice = "$%.2f".format(price)
-        val formattedChange1H = formatPercentage(change1H)
-        val formattedChange6H = formatPercentage(change6H)
-        val formattedChange24H = formatPercentage(change24H)
-
-        // ✅ Обновляем цену токена
-        if (tokenPriceText.text.toString() != formattedPrice) {
-            tokenPriceText.text = formattedPrice
-        }
-
-        // ✅ Обновляем 1H изменение
-        tokenChange1H.apply {
-            text = formattedChange1H
-            setTextColor(getColorForPercentage(change1H))
-        }
-
-        // ✅ Обновляем 6H изменение
-        tokenChange6H.apply {
-            text = formattedChange6H
-            setTextColor(getColorForPercentage(change6H))
-        }
-
-        // ✅ Обновляем 24H изменение
-        tokenChange24H.apply {
-            text = formattedChange24H
-            setTextColor(getColorForPercentage(change24H))
-        }
-    }
-
-    // ✅ Форматирование процента (чтобы всегда был + или -)
-    private fun formatPercentage(value: Float): String {
-        return if (value >= 0) "+%.2f%%".format(value) else "%.2f%%".format(value)
-    }
-
-    // ✅ Получение цвета для процента
-    private fun getColorForPercentage(value: Float): Int {
-        return if (value >= 0) getColor(R.color.green) else getColor(R.color.red)
     }
 }

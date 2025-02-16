@@ -1,52 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:gravity="center"
     android:padding="12dp"
+    android:elevation="8dp"
     android:background="@drawable/widget_background">
 
-    <ImageView
-        android:id="@+id/widget_refresh_button"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/ic_refresh"
-        android:tint="@android:color/white"
-        android:layout_marginTop="8dp"/>
-
-
-    <!-- Название токена -->
-    <TextView
-        android:id="@+id/widget_token_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="$GOVNO Price"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/white"
-        android:gravity="center"
-        android:layout_marginBottom="4dp"/>
-
-    <!-- Контейнер для цены и процентов -->
+    <!-- Верхняя строка: Название токена (слева) + 24H (справа) -->
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center">
+        android:gravity="center_vertical">
 
-        <!-- Цена токена -->
+        <!-- Название токена (Слева) -->
+        <TextView
+            android:id="@+id/widget_token_title"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="$GOVNO Price"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:gravity="start"/>
+
+        <!-- 24H (Справа) -->
+        <TextView
+            android:id="@+id/widget_24h_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="24H"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:gravity="end"/>
+    </LinearLayout>
+
+    <!-- Нижняя строка: Цена (слева) + Изменение цены (справа) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingTop="4dp">
+
+        <!-- Цена токена (Слева) -->
         <TextView
             android:id="@+id/widget_token_price"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="$0.00"
             android:textSize="25sp"
             android:textStyle="bold"
-            android:textColor="@color/white"
-            android:layout_marginEnd="8dp"/>
+            android:textColor="@android:color/white"
+            android:gravity="start"
+            android:layout_marginEnd="12dp"/>
 
-        <!-- Изменение цены (%) -->
+        <!-- Изменение цены (%) (Справа) -->
         <TextView
             android:id="@+id/widget_token_change"
             android:layout_width="wrap_content"
@@ -55,7 +69,7 @@
             android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="@android:color/holo_green_light"
-            android:gravity="center"/>
-    </LinearLayout> <!-- ✅ Закрыли `LinearLayout` для цены и процентов -->
+            android:gravity="end"/>
+    </LinearLayout>
 
 </LinearLayout>

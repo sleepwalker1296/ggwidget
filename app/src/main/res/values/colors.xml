@@ -15,6 +15,13 @@
     <color name="primaryVariant">#3700B3</color>
     <color name="secondary">#03DAC5</color>
     <color name="gradient_end">#1E3A8A</color> <!-- Синий -->
+    <color name="lightBackground">#FFFFFF</color> <!-- Белый фон -->
+    <!-- Тень -->
+    <color name="darkStrokeColor">#222222</color>
+    <color name="darkBackground">#222222</color> <!-- Тёмный фон -->
+    <color name="lightStrokeColor">#DDDDDD</color> <!-- Светло-серый для обводки -->
+
+
     <!-- Текстовые цвета -->
     <color name="primary_text">#FFFFFF</color> <!-- Белый текст -->
     <color name="secondary_text">#AAAAAA</color> <!-- Светло-серый текст -->

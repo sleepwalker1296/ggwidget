@@ -1,6 +1,10 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="widgetBackground" format="reference" />
+    <attr name="textColor" format="color" />
+    <attr name="colorBackground" format="color" />
+    <attr name="cardBackground" format="color" />
+    <attr name="textColorPrimary" format="color" />
+</resources>
 
-    <attr name="cardBackground" format="color"/>
-    <!-- Светлая тема -->
 
-    <!-- Тёмная тема --></resources>
